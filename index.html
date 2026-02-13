@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Queen ❤️</title>
+
+<style>
+/* ------------------ BASE ------------------ */
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #1a001f, #4b004f);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  color: white;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 500px;
+  padding: 25px;
+  z-index: 2;
+}
+
+h1 { font-size: 26px; }
+
+button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  background: #ff4f81;
+  color: white;
+  cursor: pointer;
+  margin-top: 15px;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+button:hover { transform: scale(1.08); }
+
+input {
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+  text-align: center;
+  margin-top: 15px;
+}
+
+/* ------------------ ANIMATIONS ------------------ */
+.fade {
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Floating Hearts */
+.heart {
+  position: absolute;
+  bottom: -20px;
+  animation: float 6s linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes float {
+  from { transform: translateY(0); opacity: 0.7; }
+  to { transform: translateY(-110vh); opacity: 0; }
+}
+
+/* Fireworks */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="our_song.mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="fireworks"></canvas>
+
+<div class="container">
+
+  <!-- LOCK SCREEN -->
+  <div id="lockScreen">
+    <h1>🔐 Enter Our Secret</h1>
+    <p>Hint: Something special between us ❤️</p>
+    <input type="password" id="passwordInput" placeholder="Enter password">
+    <br>
+    <button onclick="unlock()">Unlock</button>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div id="mainContent" style="display:none;">
+    <h1 id="title">💖 Welcome My Queen 💖</h1>
+    <p id="text">Tap below to begin your journey...</p>
+    <button id="actionBtn" onclick="nextStep()">Begin</button>
+  </div>
+
+</div>
+
+<script>
+
+/* ================= PERSONALIZE ================= */
+
+const PASSWORD = "261216";        // 🔐 Change this
+const HER_NAME = "Ijioma Chisom Sandra";          // 👑 Change this
+
+/* ================================================= */
+
+const steps = [
+`Good evening, ${HER_NAME} ❤️<br><br>You unlocked my heart long ago…`,
+"Step 1 💕<br><br>Stand up slowly and walk to the mirror.",
+"Look at yourself...<br><br>The woman staring back at you owns my entire heart 👑",
+"Step 2 💫<br><br>Turn around and walk to the bedroom door.",
+"Step 3 🔥<br><br>Open the door and walk gently toward the parlour.",
+"Final Step 🎁<br><br>Close your eyes when you reach the parlour...",
+"I love you more than words can explain.<br><br>Your surprise awaits 🎆👑❤️"
+];
+
+let currentStep = 0;
+
+/* ---------------- UNLOCK ---------------- */
+function unlock() {
+  const input = document.getElementById("passwordInput").value;
+
+  if (input === PASSWORD) {
+    document.getElementById("lockScreen").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
+  } else {
+    alert("Hmm… that’s not it 😏 Try again my love.");
+  }
+}
+
+/* ---------------- JOURNEY ---------------- */
+function nextStep() {
+
+  document.getElementById("bgMusic").play();
+
+  const text = document.getElementById("text");
+
+  if (currentStep < steps.length) {
+    text.classList.remove("fade");
+    void text.offsetWidth;
+    text.innerHTML = steps[currentStep];
+    text.classList.add("fade");
+    currentStep++;
+
+    if (currentStep === steps.length) {
+      launchFireworks();
+      document.getElementById("actionBtn").style.display = "none";
+    }
+
+  }
+}
+
+/* ---------------- FLOATING HEARTS ---------------- */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.innerHTML = "💖";
+  heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 6000);
+}, 500);
+
+/* ---------------- FIREWORKS ---------------- */
+function launchFireworks() {
+
+  const canvas = document.getElementById("fireworks");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let particles = [];
+
+  for (let i = 0; i < 100; i++) {
+    particles.push({
+      x: canvas.width / 2,
+      y: canvas.height / 3,
+      radius: Math.random() * 3 + 2,
+      color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+      speedX: (Math.random() - 0.5) * 8,
+      speedY: (Math.random() - 0.5) * 8,
+      life: 100
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach((p, index) => {
+      p.x += p.speedX;
+      p.y += p.speedY;
+      p.life--;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+
+      if (p.life <= 0) {
+        particles.splice(index, 1);
+      }
+    });
+
+    if (particles.length > 0) {
+      requestAnimationFrame(animate);
+    }
+  }
+
+  animate();
+}
+
+</script>
+
+</body>
+</html>
