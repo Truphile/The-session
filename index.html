@@ -10,67 +10,174 @@
 body {
   margin: 0;
   height: 100vh;
-  background: linear-gradient(135deg, #1a001f, #4b004f);
+  background: linear-gradient(135deg, #1a001f, #4b004f, #6a0d83);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
   color: white;
   overflow: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://picsum.photos/seed/romanticstars/1600/900.jpg') center/cover;
+  opacity: 0.15;
+  z-index: -1;
 }
 
 .container {
-  max-width: 500px;
-  padding: 25px;
+  max-width: 600px;
+  padding: 30px;
   z-index: 2;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  animation: containerGlow 4s ease-in-out infinite alternate;
 }
 
-h1 { font-size: 26px; }
+@keyframes containerGlow {
+  from { box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37); }
+  to { box-shadow: 0 8px 40px rgba(255, 79, 129, 0.4); }
+}
+
+h1 { 
+  font-size: 28px;
+  text-shadow: 0 0 10px rgba(255, 79, 129, 0.7);
+  margin-bottom: 20px;
+  animation: titlePulse 3s ease-in-out infinite;
+}
+
+@keyframes titlePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
 
 button {
-  padding: 12px 25px;
+  padding: 14px 30px;
   border: none;
-  border-radius: 25px;
-  background: #ff4f81;
+  border-radius: 30px;
+  background: linear-gradient(45deg, #ff4f81, #ff6b9d);
   color: white;
   cursor: pointer;
-  margin-top: 15px;
-  font-size: 15px;
-  transition: 0.3s;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 79, 129, 0.4);
+  position: relative;
+  overflow: hidden;
 }
 
-button:hover { transform: scale(1.08); }
+button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+button:hover { 
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(255, 79, 129, 0.6);
+}
 
 input {
-  padding: 10px;
-  border-radius: 20px;
-  border: none;
+  padding: 12px 20px;
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
   text-align: center;
-  margin-top: 15px;
+  margin-top: 20px;
+  color: white;
+  font-size: 16px;
+  width: 200px;
+  transition: all 0.3s ease;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+input:focus {
+  outline: none;
+  border-color: #ff4f81;
+  box-shadow: 0 0 15px rgba(255, 79, 129, 0.5);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* ------------------ ANIMATIONS ------------------ */
 .fade {
-  animation: fadeIn 1s ease-in-out;
+  animation: fadeIn 1.5s ease-in-out;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
 /* Floating Hearts */
 .heart {
   position: absolute;
   bottom: -20px;
-  animation: float 6s linear infinite;
+  animation: float 8s linear infinite;
   opacity: 0.7;
+  z-index: 1;
+  filter: drop-shadow(0 0 10px rgba(255, 79, 129, 0.5));
 }
 
 @keyframes float {
-  from { transform: translateY(0); opacity: 0.7; }
-  to { transform: translateY(-110vh); opacity: 0; }
+  from { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+  to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
+
+/* Floating Stars */
+.star {
+  position: absolute;
+  color: #ffd700;
+  animation: twinkle 3s ease-in-out infinite;
+  font-size: 20px;
+  z-index: 1;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
 }
 
 /* Fireworks */
@@ -79,6 +186,184 @@ canvas {
   top: 0;
   left: 0;
   pointer-events: none;
+  z-index: 100;
+}
+
+/* Progress Bar */
+.progress-container {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  margin: 20px 0;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #ff4f81, #ff6b9d, #ffc0cb);
+  border-radius: 4px;
+  width: 0%;
+  transition: width 0.8s ease;
+  box-shadow: 0 0 10px rgba(255, 79, 129, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Romantic Quote */
+.quote {
+  font-style: italic;
+  font-size: 16px;
+  opacity: 0.9;
+  margin: 20px 0;
+  padding: 0 20px;
+  position: relative;
+  background: linear-gradient(90deg, transparent, rgba(255, 79, 129, 0.1), transparent);
+  padding: 15px 25px;
+  border-radius: 10px;
+  border-left: 3px solid #ff6b9d;
+  border-right: 3px solid #ff6b9d;
+}
+
+.quote::before, .quote::after {
+  content: '"';
+  font-size: 24px;
+  color: #ff6b9d;
+  position: absolute;
+}
+
+.quote::before {
+  left: 0;
+  top: -5px;
+}
+
+.quote::after {
+  right: 0;
+  bottom: -15px;
+}
+
+/* Love Counter */
+.love-counter {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-size: 14px;
+  z-index: 10;
+  border: 1px solid rgba(255, 79, 129, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  animation: counterGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes counterGlow {
+  from { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); }
+  to { box-shadow: 0 4px 20px rgba(255, 79, 129, 0.4); }
+}
+
+/* Memory Gallery */
+.memory-gallery {
+  display: none;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.memory-item {
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.memory-item::before {
+  content: '❤️';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  font-size: 30px;
+  transition: transform 0.3s ease;
+}
+
+.memory-item:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.memory-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(255, 79, 129, 0.4);
+}
+
+/* Love Message */
+.love-message {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 50;
+  border: 1px solid rgba(255, 79, 129, 0.3);
+}
+
+.love-message.show {
+  opacity: 1;
+}
+
+/* Sparkle Effect */
+.sparkle {
+  position: absolute;
+  color: #fff;
+  animation: sparkleAnim 1.5s ease-out forwards;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+@keyframes sparkleAnim {
+  0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.5) rotate(180deg); opacity: 0; }
+}
+
+/* Enhanced Lock Screen */
+#lockScreen h1 {
+  background: linear-gradient(45deg, #ff4f81, #ff6b9d, #ffc0cb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% { filter: hue-rotate(0deg); }
+  50% { filter: hue-rotate(30deg); }
 }
 </style>
 </head>
@@ -90,6 +375,15 @@ canvas {
   <source src="our_song.mp3" type="audio/mpeg">
 </audio>
 
+<!-- LOVE COUNTER -->
+<div class="love-counter">
+  Days together: <span id="daysCounter">0</span> ❤️<br>
+  <span id="timeTogether" style="font-size: 12px; opacity: 0.8;"></span>
+</div>
+
+<!-- LOVE MESSAGE -->
+<div class="love-message" id="loveMessage"></div>
+
 <canvas id="fireworks"></canvas>
 
 <div class="container">
@@ -97,17 +391,23 @@ canvas {
   <!-- LOCK SCREEN -->
   <div id="lockScreen">
     <h1>🔐 Enter Our Secret</h1>
-    <p>Hint: Something special between us ❤️</p>
-    <input type="password" id="passwordInput" placeholder="Enter password">
+    <p>Hint: The day our hearts became one ❤️<br>
+    <small style="opacity: 0.7;">DDMMYY</small></p>
+    <input type="password" id="passwordInput" placeholder="Enter password" maxlength="6">
     <br>
-    <button onclick="unlock()">Unlock</button>
+    <button onclick="unlock()">Unlock My Heart</button>
   </div>
 
   <!-- MAIN CONTENT -->
   <div id="mainContent" style="display:none;">
     <h1 id="title">💖 Welcome My Queen 💖</h1>
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
     <p id="text">Tap below to begin your journey...</p>
-    <button id="actionBtn" onclick="nextStep()">Begin</button>
+    <div class="quote" id="quote"></div>
+    <div class="memory-gallery" id="memoryGallery"></div>
+    <button id="actionBtn" onclick="nextStep()" class="pulse">Begin Our Journey</button>
   </div>
 
 </div>
@@ -116,116 +416,433 @@ canvas {
 
 /* ================= PERSONALIZE ================= */
 
-const PASSWORD = "261216";        // 🔐 Change this
+const PASSWORD = "261218";        // 🔐 Change this
 const HER_NAME = "Ijioma Chisom Sandra";          // 👑 Change this
+const START_DATE = new Date("2018-12-26"); // 🗓️ Fixed date format!
+const MEMORIES = [
+  "https://picsum.photos/seed/memory1/300/300.jpg",
+  "https://picsum.photos/seed/memory2/300/300.jpg",
+  "https://picsum.photos/seed/memory3/300/300.jpg",
+  "https://picsum.photos/seed/memory4/300/300.jpg",
+  "https://picsum.photos/seed/memory5/300/300.jpg",
+  "https://picsum.photos/seed/memory6/300/300.jpg"
+];
 
 /* ================================================= */
 
 const steps = [
-`Good evening, ${HER_NAME} ❤️<br><br>You unlocked my heart long ago…`,
-"Step 1 💕<br><br>Stand up slowly and walk to the mirror.",
-"Look at yourself...<br><br>The woman staring back at you owns my entire heart 👑",
-"Step 2 💫<br><br>Turn around and walk to the bedroom door.",
-"Step 3 🔥<br><br>Open the door and walk gently toward the parlour.",
-"Final Step 🎁<br><br>Close your eyes when you reach the parlour...",
-"I love you more than words can explain.<br><br>Your surprise awaits 🎆👑❤️"
+  {
+    text: `Good evening, my beautiful ${HER_NAME} ❤️<br><br>You unlocked my heart long ago, but tonight I want to show you just how deep my love runs.`,
+    quote: "In your smile, I see something more beautiful than the stars."
+  },
+  {
+    text: "Step 1 💕<br><br>Stand up slowly and walk to the mirror. Take a moment to look at yourself through my eyes.",
+    quote: "You are the poem I never knew how to write, and this life is the story I want to spend with you."
+  },
+  {
+    text: "Look at yourself...<br><br>The woman staring back at you owns my entire heart. Every curve, every smile, every glance - it all captivates me completely.",
+    quote: "If I had a flower for every time I thought of you, I could walk in my garden forever."
+  },
+  {
+    text: "Step 2 💫<br><br>Turn around and walk to the bedroom door. With each step, remember a special moment we've shared.",
+    quote: "I love you not only for what you are, but for what I am when I am with you."
+  },
+  {
+    text: "Step 3 🔥<br><br>Open the door and walk gently toward the parlour. Feel the warmth of my love guiding your way.",
+    quote: "You are my today and all of my tomorrows."
+  },
+  {
+    text: "Step 4 🌹<br><br>Pause for a moment in the hallway. Close your eyes and remember our first kiss, the spark that ignited this eternal flame.",
+    quote: "In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine."
+  },
+  {
+    text: "Step 5 💍<br><br>Continue to the parlour. With each step, know that my love for you grows stronger.",
+    quote: "I saw that you were perfect, and so I loved you. Then I saw that you were not perfect and I loved you even more."
+  },
+  {
+    text: "Step 6 🎶<br><br>Listen to the music playing. It's the soundtrack to our love story - a melody that plays only in my heart when I think of you.",
+    quote: "Your love is like a song that plays on repeat in my heart, and I never want it to end."
+  },
+  {
+    text: "Step 7 🌟<br><br>Look around the room. Each corner holds a memory of us, each shadow whispers your name.",
+    quote: "I want to be the reason you look down at your phone and smile. Then walk into a pole."
+  },
+  {
+    text: "Final Step 🎁<br><br>Close your eyes when you reach the centre of the room. Take a deep breath and feel my love surrounding you.",
+    quote: "I love you more than words can define, feelings can express, and thoughts can imagine."
+  },
+  {
+    text: `I love you more than words can explain, ${HER_NAME}.<br><br>You are my sunshine on the cloudiest day, my anchor in the stormiest sea, and my forever in a world of temporary things.<br><br>Your surprise awaits 🎆👑❤️`,
+    quote: "To love is nothing. To be loved is something. But to love and be loved by you is everything."
+  }
+];
+
+const romanticQuotes = [
+  "You are my today and all of my tomorrows.",
+  "I love you to the moon and back.",
+  "You make my heart smile.",
+  "Together is a wonderful place to be.",
+  "You are my sunshine on a cloudy day.",
+  "I need you like a heart needs a beat.",
+  "You are my happy place.",
+  "Every love story is beautiful, but ours is my favorite.",
+  "You are the missing piece to my puzzle.",
+  "I love you more than yesterday, but less than tomorrow."
+];
+
+const loveMessages = [
+  "Thinking of you... always ❤️",
+  "You complete me 💕",
+  "My heart beats for you 💗",
+  "Forever yours 💝",
+  "You're my everything 🌟",
+  "Can't imagine life without you 💖"
 ];
 
 let currentStep = 0;
+let musicPlaying = false;
 
 /* ---------------- UNLOCK ---------------- */
 function unlock() {
   const input = document.getElementById("passwordInput").value;
 
   if (input === PASSWORD) {
-    document.getElementById("lockScreen").style.display = "none";
-    document.getElementById("mainContent").style.display = "block";
+    // Create sparkle effect
+    createSparkles(event);
+    
+    // Show success message
+    showLoveMessage("Heart unlocked successfully! 💕");
+    
+    setTimeout(() => {
+      document.getElementById("lockScreen").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+      calculateDaysTogether();
+      updateTimeTogether();
+      // Try to play music
+      playMusic();
+    }, 1000);
   } else {
-    alert("Hmm… that’s not it 😏 Try again my love.");
+    // Shake animation for wrong password
+    const input = document.getElementById("passwordInput");
+    input.style.animation = "shake 0.5s";
+    setTimeout(() => input.style.animation = "", 500);
+    
+    // Create a more romantic error message
+    const errorDiv = document.createElement("div");
+    errorDiv.style.color = "#ff6b9d";
+    errorDiv.style.marginTop = "15px";
+    errorDiv.innerHTML = "Hmm… that's not the key to my heart 😏 Try again my love.";
+    
+    // Remove any existing error message
+    const existingError = document.querySelector("#lockScreen div[style*='color']");
+    if (existingError) {
+      existingError.remove();
+    }
+    
+    document.getElementById("lockScreen").appendChild(errorDiv);
   }
 }
 
+/* Add shake animation */
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+  }
+`;
+document.head.appendChild(style);
+
 /* ---------------- JOURNEY ---------------- */
 function nextStep() {
-
-  document.getElementById("bgMusic").play();
-
   const text = document.getElementById("text");
+  const quote = document.getElementById("quote");
+  const progressBar = document.getElementById("progressBar");
+  const memoryGallery = document.getElementById("memoryGallery");
 
   if (currentStep < steps.length) {
+    // Create sparkle effect on button click
+    createSparkles(event);
+    
     text.classList.remove("fade");
     void text.offsetWidth;
-    text.innerHTML = steps[currentStep];
+    
+    text.innerHTML = steps[currentStep].text;
+    quote.innerHTML = steps[currentStep].quote;
+    
     text.classList.add("fade");
+    quote.classList.add("fade");
+    
+    // Update progress bar
+    const progress = ((currentStep + 1) / steps.length) * 100;
+    progressBar.style.width = progress + "%";
+    
+    // Show memory gallery at step 4
+    if (currentStep === 3) {
+      showMemoryGallery();
+    }
+    
+    // Change button text based on step
+    if (currentStep === 0) {
+      document.getElementById("actionBtn").textContent = "Continue Our Journey";
+    } else if (currentStep === steps.length - 2) {
+      document.getElementById("actionBtn").textContent = "Almost There...";
+    } else if (currentStep === steps.length - 1) {
+      document.getElementById("actionBtn").textContent = "Reveal My Surprise";
+    }
+    
     currentStep++;
 
     if (currentStep === steps.length) {
       launchFireworks();
       document.getElementById("actionBtn").style.display = "none";
+      memoryGallery.style.display = "none";
+      showLoveMessage("I love you forever, my queen! 👑❤️");
     }
-
   }
 }
 
+/* ---------------- MEMORY GALLERY ---------------- */
+function showMemoryGallery() {
+  const gallery = document.getElementById("memoryGallery");
+  gallery.style.display = "grid";
+  
+  // Clear existing memories
+  gallery.innerHTML = "";
+  
+  // Add memory items
+  MEMORIES.forEach((memory, index) => {
+    const item = document.createElement("div");
+    item.className = "memory-item";
+    item.style.backgroundImage = `url(${memory})`;
+    item.style.animationDelay = `${index * 0.1}s`;
+    item.classList.add("fade");
+    item.onclick = () => showLoveMessage("Beautiful memory with you! 💕");
+    gallery.appendChild(item);
+  });
+}
+
+/* ---------------- DAYS TOGETHER ---------------- */
+function calculateDaysTogether() {
+  const today = new Date();
+  const diffTime = Math.abs(today - START_DATE);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  document.getElementById("daysCounter").textContent = diffDays;
+}
+
+/* ---------------- UPDATE TIME TOGETHER ---------------- */
+function updateTimeTogether() {
+  const now = new Date();
+  const diff = now - START_DATE;
+  
+  const years = Math.floor(diff / (365.25 * 24 * 60 * 60 * 1000));
+  const months = Math.floor((diff % (365.25 * 24 * 60 * 60 * 1000)) / (30.44 * 24 * 60 * 60 * 1000));
+  const days = Math.floor((diff % (30.44 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
+  
+  let timeString = "";
+  if (years > 0) timeString += `${years}y `;
+  if (months > 0) timeString += `${months}m `;
+  timeString += `${days}d`;
+  
+  document.getElementById("timeTogether").textContent = timeString;
+  
+  // Update every minute
+  setTimeout(updateTimeTogether, 60000);
+}
+
 /* ---------------- FLOATING HEARTS ---------------- */
-setInterval(() => {
+function createHeart() {
   const heart = document.createElement("div");
   heart.classList.add("heart");
   heart.style.left = Math.random() * 100 + "vw";
-  heart.innerHTML = "💖";
+  
+  // Randomly choose between different heart emojis
+  const hearts = ["💖", "💕", "💗", "💝", "❤️", "💘", "💓", "💞"];
+  heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+  
   heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+  heart.style.animationDuration = (Math.random() * 3 + 5) + "s";
   document.body.appendChild(heart);
 
-  setTimeout(() => heart.remove(), 6000);
-}, 500);
+  setTimeout(() => heart.remove(), 8000);
+}
+
+// Create hearts more frequently
+setInterval(createHeart, 400);
+
+/* ---------------- FLOATING STARS ---------------- */
+function createStar() {
+  const star = document.createElement("div");
+  star.classList.add("star");
+  star.innerHTML = "✨";
+  star.style.left = Math.random() * 100 + "vw";
+  star.style.top = Math.random() * 100 + "vh";
+  star.style.animationDelay = Math.random() * 3 + "s";
+  document.body.appendChild(star);
+
+  setTimeout(() => star.remove(), 6000);
+}
+
+// Create stars
+setInterval(createStar, 2000);
+
+/* ---------------- SPARKLE EFFECT ---------------- */
+function createSparkles(event) {
+  if (!event) return;
+  
+  for (let i = 0; i < 8; i++) {
+    setTimeout(() => {
+      const sparkle = document.createElement("div");
+      sparkle.classList.add("sparkle");
+      sparkle.innerHTML = "✨";
+      sparkle.style.left = (event.clientX || window.innerWidth / 2) + (Math.random() - 0.5) * 50 + "px";
+      sparkle.style.top = (event.clientY || window.innerHeight / 2) + (Math.random() - 0.5) * 50 + "px";
+      document.body.appendChild(sparkle);
+      
+      setTimeout(() => sparkle.remove(), 1500);
+    }, i * 50);
+  }
+}
+
+/* ---------------- LOVE MESSAGE ---------------- */
+function showLoveMessage(message) {
+  const loveMessage = document.getElementById("loveMessage");
+  loveMessage.textContent = message;
+  loveMessage.classList.add("show");
+  
+  setTimeout(() => {
+    loveMessage.classList.remove("show");
+  }, 3000);
+}
+
+/* ---------------- SHOW RANDOM LOVE MESSAGE ---------------- */
+function showRandomLoveMessage() {
+  const message = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+  showLoveMessage(message);
+}
+
+// Show random love messages periodically
+setInterval(showRandomLoveMessage, 15000);
+
+/* ---------------- MUSIC ---------------- */
+function playMusic() {
+  const audio = document.getElementById("bgMusic");
+  // Try to play music (may be blocked by browser)
+  audio.play().then(() => {
+    musicPlaying = true;
+    showLoveMessage("🎵 Playing our song...");
+  }).catch(() => {
+    // Music was blocked, show message to click
+    showLoveMessage("Click anywhere to play our song 🎵");
+    document.addEventListener('click', function playMusicOnClick() {
+      audio.play();
+      musicPlaying = true;
+      document.removeEventListener('click', playMusicOnClick);
+    }, { once: true });
+  });
+}
 
 /* ---------------- FIREWORKS ---------------- */
 function launchFireworks() {
-
   const canvas = document.getElementById("fireworks");
   const ctx = canvas.getContext("2d");
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  let particles = [];
+  // Create multiple fireworks
+  function createFirework(x, y) {
+    const particles = [];
+    const particleCount = 50 + Math.floor(Math.random() * 50);
+    const hue = Math.random() * 360;
 
-  for (let i = 0; i < 100; i++) {
-    particles.push({
-      x: canvas.width / 2,
-      y: canvas.height / 3,
-      radius: Math.random() * 3 + 2,
-      color: `hsl(${Math.random() * 360}, 100%, 50%)`,
-      speedX: (Math.random() - 0.5) * 8,
-      speedY: (Math.random() - 0.5) * 8,
-      life: 100
-    });
+    for (let i = 0; i < particleCount; i++) {
+      const angle = (Math.PI * 2 / particleCount) * i;
+      const velocity = 2 + Math.random() * 4;
+      
+      particles.push({
+        x: x,
+        y: y,
+        radius: Math.random() * 3 + 1,
+        color: `hsl(${hue}, 100%, ${50 + Math.random() * 20}%)`,
+        speedX: Math.cos(angle) * velocity,
+        speedY: Math.sin(angle) * velocity,
+        life: 100,
+        decay: Math.random() * 0.5 + 0.5
+      });
+    }
+    
+    return particles;
+  }
+
+  let allParticles = [];
+  
+  // Create multiple fireworks
+  for (let i = 0; i < 5; i++) {
+    setTimeout(() => {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height * 0.5;
+      allParticles = allParticles.concat(createFirework(x, y));
+    }, i * 300);
   }
 
   function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    particles.forEach((p, index) => {
+    allParticles.forEach((p, index) => {
       p.x += p.speedX;
       p.y += p.speedY;
-      p.life--;
+      p.speedY += 0.1; // gravity
+      p.life -= p.decay;
 
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
       ctx.fillStyle = p.color;
+      ctx.globalAlpha = p.life / 100;
       ctx.fill();
 
       if (p.life <= 0) {
-        particles.splice(index, 1);
+        allParticles.splice(index, 1);
       }
     });
+    
+    ctx.globalAlpha = 1;
 
-    if (particles.length > 0) {
+    if (allParticles.length > 0) {
       requestAnimationFrame(animate);
+    } else {
+      // Create more fireworks after a delay
+      setTimeout(() => {
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height * 0.5;
+            allParticles = allParticles.concat(createFirework(x, y));
+            animate();
+          }, i * 200);
+        }
+      }, 500);
     }
   }
 
   animate();
 }
+
+/* ---------------- WINDOW RESIZE ---------------- */
+window.addEventListener('resize', () => {
+  const canvas = document.getElementById("fireworks");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+/* ---------------- INITIALIZE ---------------- */
+document.addEventListener('DOMContentLoaded', () => {
+  // Create initial stars
+  for (let i = 0; i < 5; i++) {
+    setTimeout(createStar, i * 200);
+  }
+});
 
 </script>
 
