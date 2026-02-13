@@ -277,13 +277,19 @@
         /* ===== MEMORY GALLERY ===== */
         .memory-gallery {
             display: none;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: 1fr;
+            gap: 8px;
             margin: 20px 0;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 10px 0;
+            width: 100%;
         }
 
         .memory-item {
-            height: 120px;
+            width: 150px;
+            height: 200px;
             background-size: cover;
             background-position: center;
             border-radius: 10px;
@@ -295,8 +301,7 @@
             background-color: rgba(255, 79, 129, 0.2);
             animation: imageFadeIn 0.8s ease-out forwards;
             opacity: 0;
-            aspect-ratio: 4/3;
-            min-height: 80px;
+            flex-shrink: 0;
         }
 
         @keyframes imageFadeIn {
@@ -415,14 +420,13 @@
             }
             
             .memory-gallery {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
             }
             
             .memory-item {
-                height: 140px;
-                aspect-ratio: 3/2;
-                min-height: 100px;
+                width: 120px;
+                height: 160px;
             }
             
             .love-counter {
@@ -433,15 +437,14 @@
 
         @media (max-width: 480px) {
             .memory-gallery {
-                grid-template-columns: 1fr;
-                gap: 12px;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 5px;
             }
             
             .memory-item {
-                height: 200px;
-                aspect-ratio: 16/9;
-                min-height: 150px;
-                border-radius: 12px;
+                width: 100px;
+                height: 140px;
+                border-radius: 8px;
             }
             
             h1 {
